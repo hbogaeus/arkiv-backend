@@ -7,6 +7,7 @@ fun main() {
     val config = ConfigFactory.load()
     val databaseFilePath = config.getString("database_file")
     val authorizationSecret = config.getString("authorization_secret")
+    val port = config.getInt("port")
 
     val itemStore = DatabaseArchiveItemStore("jdbc:sqlite:$databaseFilePath")
     val archiveItemController = ArchiveItemController(itemStore)
@@ -16,5 +17,5 @@ fun main() {
     Javalin.create().routes {
         before("items", authorizationHeaderChecker::check)
         crud("items/{item-id}", archiveItemController)
-    }.start(7001)
+    }.start(port)
 }
