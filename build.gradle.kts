@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.6.10"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     application
 }
 
@@ -26,6 +27,12 @@ dependencies {
     testImplementation("io.mockk:mockk:1.12.2")
     testImplementation("org.assertj:assertj-core:3.22.0")
     testImplementation(kotlin("test"))
+}
+
+tasks.shadowJar {
+    manifest {
+        attributes(Pair("Main-Class", "me.hbogaeus.Main"))
+    }
 }
 
 tasks.test {
