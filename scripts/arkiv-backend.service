@@ -1,0 +1,13 @@
+# Good description of these keys https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files
+
+[Unit]
+Description=arkiv-backend
+ConditionPathExists=/home/henry/arkiv-backend/start.sh
+After=network.target
+
+[Service]
+WorkingDirectory=/home/henry/arkiv-backend
+ExecStart=/home/henry/arkiv-backend/start.sh
+
+[Install]
+WantedBy=multi-user.target
