@@ -1,25 +1,20 @@
-import com.typesafe.config.ConfigFactory
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.before
 import io.javalin.apibuilder.ApiBuilder.crud
 import java.nio.file.Files
-import java.nio.file.Path
 import kotlin.io.path.pathString
 
 fun main() {
-    val applicationConfig = ConfigFactory.load()
-    val databaseFilePath = Path.of(applicationConfig.getString("database_path"))
-    val authorizationSecret = applicationConfig.getString("authorization_secret")
-    val port = applicationConfig.getInt("port")
+    val (databasePath, authSecret, port) = AppConfig.fromEnvironment()
 
-    if (!Files.exists(databaseFilePath)) {
-        throw IllegalStateException("Database file does not exist at '${databaseFilePath.toAbsolutePath()}'")
+    if (!Files.exists(databasePath)) {
+        throw IllegalStateException("Database file does not exist at '${databasePath.toAbsolutePath()}'")
     }
 
-    val itemStore = DatabaseArchiveItemStore("jdbc:sqlite:${databaseFilePath.pathString}")
+    val itemStore = DatabaseArchiveItemStore("jdbc:sqlite:${databasePath.pathString}")
     val archiveItemController = ArchiveItemController(itemStore)
 
-    val authorizationHeaderChecker = AuthorizationHeaderChecker(authorizationSecret)
+    val authorizationHeaderChecker = AuthorizationHeaderChecker(authSecret)
 
     Javalin.create { config ->
         config.showJavalinBanner = false
