@@ -7,9 +7,9 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 internal class AuthorizationHeaderCheckerTest {
-    val ctx = mockk<Context>()
-    val authorizationSecret = "::very-secret::"
-    val authorizationHeaderChecker = AuthorizationHeaderChecker(authorizationSecret)
+    private val ctx = mockk<Context>()
+    private val authorizationSecret = "::very-secret::"
+    private val authorizationHeaderChecker = AuthorizationHeaderChecker(authorizationSecret)
 
     @Test
     fun `throws if no authorization header is set`() {

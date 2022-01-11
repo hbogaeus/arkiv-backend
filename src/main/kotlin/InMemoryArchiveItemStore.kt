@@ -1,18 +1,18 @@
 class InMemoryArchiveItemStore : ArchiveItemStore {
-    var currentId = 0
-    val store = mutableMapOf<Int, ArchiveItem>()
+    private var currentId = 0
+    private val store = mutableMapOf<Int, ArchiveItem>()
 
     override fun getAll(): List<ArchiveItem> {
         return store.values.toList()
     }
 
     override fun getOne(id: Int): ArchiveItem {
-        return store.get(id)!!
+        return store[id]!!
     }
 
     override fun insert(createItemRequest: CreateItemRequest): ArchiveItem {
         val archiveItem = ArchiveItem(currentId++, createItemRequest.title, createItemRequest.url)
-        store.put(archiveItem.id, archiveItem)
+        store[archiveItem.id] = archiveItem
         return archiveItem
     }
 

@@ -9,16 +9,15 @@ import kotlin.io.path.pathString
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class DatabaseArchiveItemStoreTest {
-    private val databasePath: Path
+    /*
+     * jdbc:sqlite::memory: doesn't work here due to running the migrations
+     * connecting through JDBI ends up creating two different in-memory databases,
+     * so we're creating a file database here instead
+     */
+    private val databasePath: Path = Paths.get("test.db")
     private val store: DatabaseArchiveItemStore
 
     init {
-        /*
-         * jdbc:sqlite::memory: doesn't work here due to running the migrations
-         * connecting through JDBI ends up creating two different in-memory databases,
-         * so we're creating a file database here instead
-         */
-        databasePath = Paths.get("test.db")
         val connectionString = "jdbc:sqlite:${databasePath.pathString}"
 
         store = DatabaseArchiveItemStore(connectionString)

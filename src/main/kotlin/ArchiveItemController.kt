@@ -2,7 +2,7 @@ import io.javalin.apibuilder.CrudHandler
 import io.javalin.http.Context
 
 
-class ArchiveItemController(val store: ArchiveItemStore) : CrudHandler {
+class ArchiveItemController(private val store: ArchiveItemStore) : CrudHandler {
     override fun getAll(ctx: Context) {
         val allItems = store.getAll()
         ctx.json(allItems)
