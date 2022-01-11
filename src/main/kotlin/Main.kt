@@ -7,10 +7,10 @@ import java.nio.file.Path
 import kotlin.io.path.pathString
 
 fun main() {
-    val config = ConfigFactory.load()
-    val databaseFilePath = Path.of(config.getString("database_file"))
-    val authorizationSecret = config.getString("authorization_secret")
-    val port = config.getInt("port")
+    val applicationConfig = ConfigFactory.load()
+    val databaseFilePath = Path.of(applicationConfig.getString("database_path"))
+    val authorizationSecret = applicationConfig.getString("authorization_secret")
+    val port = applicationConfig.getInt("port")
 
     if (!Files.exists(databaseFilePath)) {
         throw IllegalStateException("Database file does not exist at '${databaseFilePath.toAbsolutePath()}'")
@@ -21,7 +21,9 @@ fun main() {
 
     val authorizationHeaderChecker = AuthorizationHeaderChecker(authorizationSecret)
 
-    Javalin.create().routes {
+    Javalin.create { config ->
+        config.showJavalinBanner = false
+    }.routes {
         before("items", authorizationHeaderChecker::check)
         crud("items/{item-id}", archiveItemController)
     }.start(port)
