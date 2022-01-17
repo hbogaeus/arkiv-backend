@@ -1,3 +1,5 @@
+package bookmarks
+
 import java.time.ZonedDateTime
 
 class InMemoryBookmarkStore : BookmarkStore {

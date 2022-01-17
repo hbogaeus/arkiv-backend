@@ -1,3 +1,5 @@
+import bookmarks.BookmarkController
+import bookmarks.DatabaseBookmarkStore
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.before
 import io.javalin.apibuilder.ApiBuilder.crud

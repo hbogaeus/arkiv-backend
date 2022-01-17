@@ -1,3 +1,5 @@
+package bookmarks
+
 data class CreateBookmarkRequest(val title: String, val url: String)
 
 interface BookmarkStore {

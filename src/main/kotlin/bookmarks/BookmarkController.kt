@@ -1,6 +1,7 @@
+package bookmarks
+
 import io.javalin.apibuilder.CrudHandler
 import io.javalin.http.Context
-
 
 class BookmarkController(val store: BookmarkStore) : CrudHandler {
     override fun getAll(ctx: Context) {

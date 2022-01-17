@@ -1,3 +1,5 @@
+package bookmarks
+
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Test
