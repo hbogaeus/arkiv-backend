@@ -26,6 +26,7 @@ dependencies {
     implementation("ch.qos.logback:logback-core:1.2.10")
     implementation("io.github.cdimascio:dotenv-kotlin:6.2.2")
     implementation("com.konghq:unirest-java:3.13.4")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("io.mockk:mockk:1.12.2")
     testImplementation("org.assertj:assertj-core:3.22.0")
