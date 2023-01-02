@@ -1,3 +1,5 @@
+import bookmarks.BookmarkController
+import bookmarks.DatabaseBookmarkStore
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.before
 import io.javalin.apibuilder.ApiBuilder.crud
@@ -11,15 +13,15 @@ fun main() {
         throw IllegalStateException("Database file does not exist at '${databasePath.toAbsolutePath()}'")
     }
 
-    val itemStore = DatabaseArchiveItemStore("jdbc:sqlite:${databasePath.pathString}")
-    val archiveItemController = ArchiveItemController(itemStore)
+    val bookmarkStore = DatabaseBookmarkStore("jdbc:sqlite:${databasePath.pathString}")
+    val bookmarkController = BookmarkController(bookmarkStore)
 
     val authorizationHeaderChecker = AuthorizationHeaderChecker(authSecret)
 
     Javalin.create { config ->
         config.showJavalinBanner = false
     }.routes {
-        before("items", authorizationHeaderChecker::check)
-        crud("items/{item-id}", archiveItemController)
+        before("bookmarks", authorizationHeaderChecker::check)
+        crud("bookmarks/{bookmark-id}", bookmarkController)
     }.start(port)
 }
